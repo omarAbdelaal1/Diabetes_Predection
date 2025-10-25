@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(120deg, #a2b3f7 0%, #e6f0fd 100%);
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .form-card {
+            background: #fff;
+            box-shadow: 0 10px 32px 0 rgba(76,110,245,0.12), 0 2px 8px 0 rgba(0,0,0,.08);
+            border-radius: 2rem;
+            padding: 2.8rem 2.2rem 2rem 2.2rem;
+            margin-top: 8vh;
+            margin-bottom: 8vh;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #38598b;
+            margin-bottom: 10px;
+        }
+        .form-control, .form-select {
+            border-radius: 0.9rem;
+            border: 2px solid #e3e9fb;
+            box-shadow: none;
+            transition: border 0.3s;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #6da8fd;
+            outline: none;
+            box-shadow: 0 0 0 2px #a2d4f7;
+        }
+        .btn-primary {
+            border-radius: 1.2rem;
+            background: linear-gradient(90deg, #356cf6 30%, #60d3ee 100%);
+            border: none;
+            font-weight: 700;
+            font-size: 1.12rem;
+            transition: box-shadow 0.22s, transform 0.22s;
+            margin-top: 20px;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 6px 24px 0 rgba(76,110,245,0.12), 0 1.5px 8px 0 rgba(0,0,0,.12);
+            transform: translateY(-2px) scale(1.04);
+        }
+        .medical-svg {
+            display: block;
+            margin: 0 auto 1.1rem auto;
+            height: 60px;
+        }
+        .input-group-text {
+            background: #f2f5fa;
+            border-radius: 0.82rem 0 0 0.82rem;
+        }
+        .alert {
+            font-size: 1.14rem;
+            font-weight: 500;
+        }
+        @media (min-width: 768px) {
+          .form-card {
+            padding-left: 3rem; padding-right: 3rem;
+            max-width: 700px;
+          }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="form-card mx-auto">
+                <svg class="medical-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" fill="#e3f3fd"/><rect x="20" y="20" width="24" height="24" rx="8" fill="#77c0ec"/><path d="M32 32v-6m0 0a2 2 0 1 1 4 0v6a2 2 0 1 1-4 0z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="38" r="2" fill="#fff"/></svg>
+                <h2 class="mb-4 text-center">Diabetes Prediction</h2>
+                <form id="predictForm">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Gender</label>
+                        <select class="form-select" name="gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Age (Years)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="number" class="form-control" name="age" min="0" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Hypertension (1 = Yes, 0 = No)</label>
+                        <select class="form-select" name="hypertension" required>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Heart Disease (1 = Yes, 0 = No)</label>
+                        <select class="form-select" name="heart_disease" required>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Smoking History</label>
+                        <select class="form-select" name="smoking_history" required>
+                            <option value="never">Never</option>
+                            <option value="former">Former</option>
+                            <option value="current">Current</option>
+                            <option value="not current">Not current</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Body Mass Index (BMI)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-bar-chart-fill"></i></span>
+                            <input type="number" step="any" class="form-control" name="bmi" min="0" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Glycated Hemoglobin (HbA1c, %)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-trophy"></i></span>
+                            <input type="number" step="any" class="form-control" name="HbA1c_level" min="0" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Blood Glucose (mg/dL)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-droplet-fill"></i></span>
+                            <input type="number" step="any" class="form-control" name="blood_glucose_level" min="0" required>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <button type="submit" class="btn btn-primary w-100">Predict</button>
+                    </div>
+                  </div>
+                </form>
+                <div id="result" class="alert mt-3 d-none"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<script>
+    document.getElementById('predictForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.age = +data.age;
+      data.hypertension = +data.hypertension;
+      data.heart_disease = +data.heart_disease;
+      data.bmi = +data.bmi;
+      data.HbA1c_level = +data.HbA1c_level;
+      data.blood_glucose_level = +data.blood_glucose_level;
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.className = 'alert mt-3 d-none';
+      resultDiv.innerHTML = '';
+      try {
+        const response = await fetch('http://localhost:5000/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const resJson = await response.json();
+        resultDiv.className = 'alert mt-3 ' + (resJson.result === 1 ? 'alert-danger' : 'alert-success');
+        resultDiv.innerHTML = resJson.result === 1 ?
+          '⚠️ <b>Likely Diabetes</b> (consult your doctor).' :
+          '✅ <b>Unlikely to have diabetes.</b>';
+      } catch (err) {
+        resultDiv.className = 'alert alert-warning mt-3';
+        resultDiv.innerHTML = 'Error predicting: ' + err;
+      }
+    });
+</script>
+</body>
+</html>
